@@ -7,9 +7,10 @@ var but_deslog = document.getElementById("but_deslog");
 
 if(JSON.parse(sessionStorage.getItem('logado')) === "True"){
     tela_logado.style.cssText = "display: block;";
-    nome_tela.innerHTML = JSON.parse(sessionStorage.getItem('nome'));
-    idade_tela.innerHTML = JSON.parse(sessionStorage.getItem('idade'));
-    email_tela.innerHTML = JSON.parse(sessionStorage.getItem('email'));
+    console.log(JSON.parse(sessionStorage.getItem('nome' + JSON.parse(sessionStorage.getItem('usuario')))));
+    nome_tela.innerHTML = JSON.parse(sessionStorage.getItem('nome' + JSON.parse(sessionStorage.getItem('usuario'))));
+    idade_tela.innerHTML = JSON.parse(sessionStorage.getItem('idade' + JSON.parse(sessionStorage.getItem('usuario'))));
+    email_tela.innerHTML = JSON.parse(sessionStorage.getItem('email' + JSON.parse(sessionStorage.getItem('usuario'))));
 
     but_log.style.cssText = "display: none;";
     but_deslog.style.cssText = "display: block;";
@@ -21,41 +22,52 @@ function cadastrar(){
     var nome = document.getElementById('nome');
     var idade = document.getElementById('idade');
 
+    if(parseInt(JSON.parse(sessionStorage.getItem('cadastro'))) > 0){
+        var n = parseInt(JSON.parse(sessionStorage.getItem('cadastro'))) + 1;
+    }else{
+        var n = 1;
+    }
+
     var email_salvar = JSON.stringify(email.value);
-    sessionStorage.setItem('email', email_salvar);
+    sessionStorage.setItem('email'+n, email_salvar);
 
     var senha_salvar = JSON.stringify(senha.value);
-    sessionStorage.setItem('senha', senha_salvar);
+    sessionStorage.setItem('senha'+n, senha_salvar);
 
     var nome_salvar = JSON.stringify(nome.value);
-    sessionStorage.setItem('nome', nome_salvar);
+    sessionStorage.setItem('nome'+n, nome_salvar);
     
     var idade_salvar = JSON.stringify(idade.value);
-    sessionStorage.setItem('idade', idade_salvar);
+    sessionStorage.setItem('idade'+n, idade_salvar);
+
+    sessionStorage.setItem('cadastro', n.toString());
 
     alert('Cadastrado');
 }
-
-
-console.log(JSON.parse(sessionStorage.getItem('email')));
-
+for(i = 0; i < parseInt(JSON.parse(sessionStorage.getItem('cadastro'))); i++){
+    var email_cadastrado = JSON.parse(sessionStorage.getItem('email'+i.toString()));
+    var senha_cadastrado = JSON.parse(sessionStorage.getItem('senha'+i.toString()));
+    console.log(email_cadastrado);
+}
 function logar(){
     var email = document.getElementById('email');
     var senha = document.getElementById('senha');
-    var email_cadastrado = JSON.parse(sessionStorage.getItem('email'));
-    var senha_cadastrado = JSON.parse(sessionStorage.getItem('senha'));
 
-    if(email.value === email_cadastrado){
-        if(senha.value === senha_cadastrado){
-            alert("Logado");
-            var logado = "True";
-            var logado_salvar = JSON.stringify(logado);
-            sessionStorage.setItem('logado', logado_salvar);
+    for(i = 0; i < parseInt(JSON.parse(sessionStorage.getItem('cadastro'))); i++){
+        var email_cadastrado = JSON.parse(sessionStorage.getItem('email'+i.toString()));
+        var senha_cadastrado = JSON.parse(sessionStorage.getItem('senha'+i.toString()));
+        if(email.value === email_cadastrado){
+            if(senha.value === senha_cadastrado){
+                alert("Logado");
+                var logado = "True";
+                var logado_salvar = JSON.stringify(logado);
+                sessionStorage.setItem('logado', logado_salvar);
+                sessionStorage.setItem('usuario', i.toString());
+            }else{
+                alert("Senha Incorreta");
+            }
         }else{
-            alert("Senha Incorreta");
         }
-    }else{
-        alert("Email Incorreto");
     }
 }
 
