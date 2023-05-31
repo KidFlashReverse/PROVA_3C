@@ -44,16 +44,11 @@ function cadastrar(){
 
     alert('Cadastrado');
 }
-for(i = 0; i < parseInt(JSON.parse(sessionStorage.getItem('cadastro'))); i++){
-    var email_cadastrado = JSON.parse(sessionStorage.getItem('email'+i.toString()));
-    var senha_cadastrado = JSON.parse(sessionStorage.getItem('senha'+i.toString()));
-    console.log(email_cadastrado);
-}
 function logar(){
     var email = document.getElementById('email');
     var senha = document.getElementById('senha');
 
-    for(i = 0; i < parseInt(JSON.parse(sessionStorage.getItem('cadastro'))); i++){
+    for(i = 0; i <= parseInt(JSON.parse(sessionStorage.getItem('cadastro'))); i++){
         var email_cadastrado = JSON.parse(sessionStorage.getItem('email'+i.toString()));
         var senha_cadastrado = JSON.parse(sessionStorage.getItem('senha'+i.toString()));
         if(email.value === email_cadastrado){
