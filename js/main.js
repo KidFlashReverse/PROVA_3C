@@ -66,6 +66,7 @@ function logar(){
                 sessionStorage.setItem('errado', JSON.stringify(""));
             }else{
                 alert("Senha Incorreta");
+                sessionStorage.setItem('errado', JSON.stringify(""));
             }
         }else{
             sessionStorage.setItem('errado', JSON.stringify("Email Incorreto"));
