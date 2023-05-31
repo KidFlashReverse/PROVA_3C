@@ -16,6 +16,11 @@ if(JSON.parse(sessionStorage.getItem('logado')) === "True"){
     but_deslog.style.cssText = "display: block;";
 }
 
+if(JSON.parse(sessionStorage.getItem('errado')) === "Email Incorreto"){
+    alert("Email Incorreto");
+    sessionStorage.setItem('errado', JSON.stringify(""));
+}
+
 function cadastrar(){
     var email = document.getElementById('email');
     var senha = document.getElementById('senha');
@@ -58,10 +63,12 @@ function logar(){
                 var logado_salvar = JSON.stringify(logado);
                 sessionStorage.setItem('logado', logado_salvar);
                 sessionStorage.setItem('usuario', i.toString());
+                sessionStorage.setItem('errado', JSON.stringify(""));
             }else{
                 alert("Senha Incorreta");
             }
         }else{
+            sessionStorage.setItem('errado', JSON.stringify("Email Incorreto"));
         }
     }
 }
